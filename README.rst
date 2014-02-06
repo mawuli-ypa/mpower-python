@@ -35,15 +35,23 @@ Usage
 
     # Invoice
     store = mpower.Store(name='FooBar Shop')
-    items = [{"name": "VIP Ticket", "quantity": 2,
-         "unit_price": "35.0", "total_price": "70.0",
-         "description": "VIP Tickets for the MPower Event"}]
+    items = [
+        {
+            "name": "VIP Ticket",
+            "quantity": 2,
+            "unit_price": "35.0",
+            "total_price": "70.0",
+            "description": "VIP Tickets for the MPower Event"
+        },
+    ]
     invoice = mpower.Invoice(store)
     invoice.add_items(items * 10)
     # taxes are (key,value) pairs
     invoice.add_taxes([("NHIS TAX", 23.8), ("VAT", 5)])
-    invoice.add_custom_data([("phone_brand", "Motorola V3"),
-                ("model", "65456AH23")])
+    invoice.add_custom_data([
+        ("phone_brand", "Motorola V3"),
+        ("model", "65456AH23"),
+    ])
 
     # you can also pass the items, taxes, custom to the `create` method
     successful, response = invoice.create()
@@ -55,23 +63,31 @@ Usage
 
 
     # OPR
-    opr_data = {'account_alias': '02XXXXXXXX',
-                'description': 'Hello World',
-                 'total_amount': 345}
+    opr_data = {
+        'account_alias': '02XXXXXXXX',
+        'description': 'Hello World',
+        'total_amount': 345
+    }
     store = mpower.Store(name='FooBar Shop')
     opr = mpower.OPR(opr_data, store)
     # You can also pass the data to the `create` function
     successful, response = opr.create()
     if successful:
        do_something_with_response(response)
-    status, _ = opr.charge({'token': token,
-                    'confirm_token': user_submitted_token})
+    status, _ = opr.charge({
+        'token': token,
+        'confirm_token': user_submitted_token
+    })
 
 
     # Direct card
-    card_info = {"card_name" : "Alfred Robert Rowe",
-        "card_number" : "4242424242424242", "card_cvc" : "123",
-        "exp_month" : "06", "exp_year" : "2010", "amount" : "300"
+    card_info = {
+        "card_name" : "Alfred Robert Rowe",
+        "card_number" : "4242424242424242",
+        "card_cvc" : "123",
+        "exp_month" : "06",
+        "exp_year" : "2010",
+        "amount" : "300"
     }
     direct_card = mpower.DirectCard(card_info)
     # this request should fail since the card_info data is invalid

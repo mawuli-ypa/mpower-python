@@ -7,9 +7,13 @@ class DirectCard(Payment):
 
     This class handles billing of clients using their credit card information
     Card info format:
-       '{ "card_name" : "Alfred Robert Rowe",
-          "card_number" : "4242424242424242", "card_cvc" : "123",
-          "exp_month" : "06", "exp_year" : "2010", "amount" : "300"
+       '{
+          "card_name" : "Alfred Robert Rowe",
+          "card_number" : "4242424242424242",
+          "card_cvc" : "123",
+          "exp_month" : "06",
+          "exp_year" : "2010",
+          "amount" : "300"
         }'
     """
     def __init__(self, card_info={}):
@@ -26,7 +30,10 @@ class DirectPay(Payment):
     """Directpay processing class
 
     Receipient account_info format:
-    '{ "account_alias" : "0244124660", "amount" : 30.50 }'
+    '{
+       "account_alias" : "0244124660",
+       "amount" : 30.50
+    }'
     """
     def __init__(self, account_alias=None, amount=None):
         self.transaction = {'account_alias': account_alias,

@@ -23,9 +23,17 @@ class Invoice(Payment):
     def create(self, items=[], taxes=[], custom_data=[]):
         """Adds the items to the invoice
 
-        Format of 'items': [{"name": "VIP Ticket", "quantity": 2,
-                       "unit_price": "35.0", "total_price": "70.0",
-                        "description": "VIP Tickets for the MPower Event"},...]
+        Format of 'items':
+        [
+         {
+             "name": "VIP Ticket",
+             "quantity": 2,
+             "unit_price": "35.0",
+             "total_price": "70.0",
+             "description": "VIP Tickets for the MPower Event"
+          }
+        ,...
+        ]
         See the MPower Payments APi for more information on the format of the 'items'
         """
         self.add_items(items)
@@ -71,14 +79,19 @@ class Invoice(Payment):
     def _prepare_data(self):
         """Formats the data in the current transaction for processing"""
         total_amount = self.total_amount or self.calculate_total_amt()
-        self._data = {"invoice": {"items": self.items, "taxes": self.taxes,
-                                  "total_amount": total_amount,
-                                  "description": self.description,
-                                  },
-                      "store": self.store.info,
-                      "custom_data": self.custom_data,
-                      "actions": {"cancel_url": self.cancel_url,
-                                  "return_url": self.return_url}}
+        self._data = {
+            "invoice":{
+                "items": self.items, "taxes": self.taxes,
+                "total_amount": total_amount,
+                "description": self.description,
+            },
+            "store": self.store.info,
+            "custom_data": self.custom_data,
+            "actions": {
+                "cancel_url": self.cancel_url,
+                "return_url": self.return_url
+            }
+        }
         return self._data
 
     def calculate_total_amt(self, items={}):
