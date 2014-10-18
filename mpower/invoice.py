@@ -3,6 +3,7 @@ from . import Payment, Store
 
 
 class Invoice(Payment):
+
     def __init__(self, store=None):
         """Create an invoice
 
