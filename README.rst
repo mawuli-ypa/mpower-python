@@ -121,5 +121,6 @@ Note
 .. _MPower Payments HTTP API: http://mpowerpayments.com/developers/docs/http.html
 .. _Build Status: https://api.travis-ci.org/mawuli-ypa/mpower-python.png
 
-## Authors
+Authors
+--------
 Mawuli Adzaku <mawuli at mawuli dot me>
