@@ -70,8 +70,10 @@ class Payment(object):
     def __init__(self):
         """Base class for all the other payment libraries"""
        # request headers
-        self._headers = {'User-Agent': MP_USER_AGENT,
-                         "Content-Type": "application/json"}
+        self._headers = {
+            'User-Agent': MP_USER_AGENT,
+            "Content-Type": "application/json"
+        }
         # response object
         self._response = None
         # data to send to server
@@ -88,7 +90,7 @@ class Payment(object):
         rsc_url = self.get_rsc_endpoint(resource)
         if _data:
             req = requests.post(rsc_url, data=json.dumps(data),
-                               headers=self.headers)
+                                headers=self.headers)
         else:
             req = requests.get(rsc_url, params=data,
                                headers=self.headers)
@@ -98,6 +100,7 @@ class Payment(object):
                 return (True, self._response)
             else:
                 return (False, self._response['response_text'])
+
         return (response.code, "Request Failed")
 
     @property
@@ -126,9 +129,10 @@ class Payment(object):
     @property
     def _config(self):
         _m = __MODULE__
-        return {'MP-Master-Key': _m.api_keys.get('MP-Master-Key'),
-                'MP-Private-Key': _m.api_keys.get('MP-Private-Key'),
-                'MP-Token': _m.api_keys.get('MP-Token')
+        return {
+            'MP-Master-Key': _m.api_keys.get('MP-Master-Key'),
+            'MP-Private-Key': _m.api_keys.get('MP-Private-Key'),
+            'MP-Token': _m.api_keys.get('MP-Token')
         }
 
 

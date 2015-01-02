@@ -36,8 +36,10 @@ class DirectPay(Payment):
     }'
     """
     def __init__(self, account_alias=None, amount=None):
-        self.transaction = {'account_alias': account_alias,
-                            'amount': amount}
+        self.transaction = {
+            'account_alias': account_alias,
+            'amount': amount
+        }
         super(DirectPay, self).__init__()
 
     def process(self, transaction=None):

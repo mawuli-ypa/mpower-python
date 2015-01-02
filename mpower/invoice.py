@@ -3,6 +3,7 @@ from . import Payment, Store
 
 
 class Invoice(Payment):
+    """Payment invoice"""
 
     def __init__(self, store=None):
         """Create an invoice
@@ -35,7 +36,7 @@ class Invoice(Payment):
           }
         ,...
         ]
-        See the MPower Payments APi for more information on the format of the 'items'
+        See the MPower Payments API for more information on the format of the 'items'
         """
         self.add_items(items)
         self.add_taxes(taxes)
@@ -66,7 +67,7 @@ class Invoice(Payment):
     def add_custom_data(self, data=[]):
         """Adds the data to teh custom data sent to the server
 
-        Format of custom data: [("phone_brand", Motorola V3"), ("model", "65456AH23")]
+        data format: [("phone_brand", Motorola V3"), ("model", "65456AH23")]
         """
         self.custom_data.update(dict(data))
 
