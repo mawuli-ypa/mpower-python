@@ -1,4 +1,4 @@
-.. image:: https://api.travis-ci.org/mawuli-ypa/mpower-python.png
+.. image:: https://api.travis-ci.org/mawuli/mpower-python.png
 
 MPower Python Client Library
 ============================
@@ -11,7 +11,7 @@ Installation
 .. code-block:: bash
 
     $ sudo pip install mpower
-    $ OR git clone https://github.com/mawuli-ypa/mpower-python
+    $ OR git clone https://github.com/mawuli/mpower-python
     $ cd mpower-python; python setup.py install`
     $ nosetests tests/  # run unit tests
 
@@ -119,7 +119,7 @@ Note
 - Tested on Python 2.6, 2.7, and 3+. `Build Status`_
 
 .. _MPower Payments HTTP API: http://mpowerpayments.com/developers/docs/http.html
-.. _Build Status: https://api.travis-ci.org/mawuli-ypa/mpower-python.png
+.. _Build Status: https://api.travis-ci.org/mawuli/mpower-python.png
 
 Authors
 --------

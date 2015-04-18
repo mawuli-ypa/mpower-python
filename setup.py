@@ -73,7 +73,7 @@ setup(
     packages=['mpower'],
     cmdclass={'test': TestCommand, 'clean': CleanCommand},
     scripts=[],
-    url='https://github.com/mawuli-ypa/mpower-python',
+    url='https://github.com/mawuli/mpower-python',
     license='LICENSE.txt',
     keywords="mpower mobile money payments",
     description='MPower Payments Python client library',

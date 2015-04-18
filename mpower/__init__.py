@@ -4,7 +4,7 @@ MPower Payments Python clinet library.
 Modules implemented: DirectPay, DirectCard, Invoice, and OPR
 """
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __author__ = "Mawuli Adzaku <mawuli@mawuli.me>"
 
 import os
