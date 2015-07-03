@@ -89,7 +89,8 @@ class Invoice(Payment):
         total_amount = self.total_amount or self.calculate_total_amt()
         self._data = {
             "invoice": {
-                "items": self.__encode_items(self.items), "taxes": self.taxes,
+                "items": self.__encode_items(self.items),
+                "taxes": self.taxes,
                 "total_amount": total_amount,
                 "description": self.description,
             },
@@ -115,4 +116,4 @@ class Invoice(Payment):
                              description='VIP Tickets for party')),...]
         """
         xs = [item._asdict() for (_key, item) in items.items()]
-        return map(lambda x: dict(zip(x.keys(), x.values())), xs)
+        return list(map(lambda x: dict(zip(x.keys(), x.values())), xs))

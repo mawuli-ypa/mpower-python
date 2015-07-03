@@ -91,10 +91,10 @@ class Payment(object):
         _data = data or self._data
         rsc_url = self.get_rsc_endpoint(resource)
         if _data:
-            req = requests.post(rsc_url, data=json.dumps(data),
+            req = requests.post(rsc_url, data=json.dumps(_data),
                                 headers=self.headers)
         else:
-            req = requests.get(rsc_url, params=data,
+            req = requests.get(rsc_url, params=_data,
                                headers=self.headers)
         if req.status_code == 200:
             self._response = json.loads(req.text)
