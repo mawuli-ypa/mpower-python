@@ -10,12 +10,15 @@ class Invoice(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
         self.store = mpower.Store(name="FooBar Shop")
-        self.items = [{"name": "VIP Ticket",
-                       "quantity": 2,
-                       "unit_price": "35.0",
-                       "total_price": "70.0",
-                       "description": "VIP Tickets for the MPower Event"
-                       }]
+        self.items = [
+            mpower.InvoiceItem(
+                name="VIP Ticket",
+                quantity=2,
+                unit_price="35.0",
+                total_price="70.0",
+                description="VIP Tickets for the MPower Event"
+            )
+        ]
         self.invoice = mpower.Invoice(self.store)
         self.invoice.add_items(self.items * 10)
         # taxes are (key,value) pairs

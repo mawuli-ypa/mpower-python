@@ -8,12 +8,13 @@ mpower.api_keys = MP_ACCESS_TOKENS
 
 class TestDirectCard(unittest.TestCase):
     def test_directcard(self):
-        card_info = {"card_name": "Alfred Robert Rowe",
-                     "card_number": "4242424242424242",
-                     "card_cvc": "123",
-                     "exp_month": "06",
-                     "exp_year": "2010",
-                     "amount": "300"
+        card_info = {
+            "card_name": "Alfred Robert Rowe",
+            "card_number": "4242424242424242",
+            "card_cvc": "123",
+            "exp_month": "06",
+            "exp_year": "2010",
+            "amount": "300"
         }
         direct_card = mpower.DirectCard(card_info)
         # this request should fail since the card_info data is invalid

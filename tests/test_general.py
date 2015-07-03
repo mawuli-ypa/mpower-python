@@ -1,4 +1,3 @@
-import os
 import unittest
 import mpower
 from . import MP_ACCESS_TOKENS

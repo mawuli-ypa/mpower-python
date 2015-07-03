@@ -1,5 +1,9 @@
 """MPower Payments Invoice"""
-from . import Payment, Store
+from . import Payment
+from collections import namedtuple
+
+InvoiceItem = namedtuple('InvoiceItem', 'name quantity unit_price \
+                             total_price description')
 
 
 class Invoice(Payment):
@@ -8,8 +12,8 @@ class Invoice(Payment):
     def __init__(self, store=None):
         """Create an invoice
 
-        Accepts list of store object as initial parameter and a dictionary of tokens
-        for accessing the MPower Payments API
+        Accepts list of store object as initial parameter and
+        a dictionary of tokens for accessing the MPower Payments API
         """
         self.cancel_url = None
         self.return_url = None
@@ -27,16 +31,15 @@ class Invoice(Payment):
 
         Format of 'items':
         [
-         {
-             "name": "VIP Ticket",
-             "quantity": 2,
-             "unit_price": "35.0",
-             "total_price": "70.0",
-             "description": "VIP Tickets for the MPower Event"
+         InvoiceItem(
+             name="VIP Ticket",
+             quantity= 2,
+             unit_price= "35.0",
+             total_price= "70.0",
+             description= "VIP Tickets for the MPower Event"
           }
         ,...
         ]
-        See the MPower Payments API for more information on the format of the 'items'
         """
         self.add_items(items)
         self.add_taxes(taxes)
@@ -59,7 +62,7 @@ class Invoice(Payment):
         [("NHIs TAX", 23.8), ("VAT", 5)]
         """
         # fixme: how to resolve duplicate tax names
-        _idx = len(self.taxes) # current index to prevent overwriting
+        _idx = len(self.taxes)  # current index to prevent overwriting
         for idx, tax in enumerate(taxes):
             tax_key = "tax_" + str(idx + _idx)
             self.taxes[tax_key] = {"name": tax[0], "amount": tax[1]}
@@ -71,19 +74,22 @@ class Invoice(Payment):
         """
         self.custom_data.update(dict(data))
 
-    def add_items(self, items=[]):
+    def add_item(self, item):
         """Updates the list of items in the current transaction"""
         _idx = len(self.items)
-        for idx, item in enumerate(items):
-            self.items.update({"item_" + str(idx + _idx): item})
+        self.items.update({"item_" + str(_idx + 1): item})
+
+    def add_items(self, items):
+        for item in items:
+            self.add_item(item)
 
     @property
     def _prepare_data(self):
         """Formats the data in the current transaction for processing"""
         total_amount = self.total_amount or self.calculate_total_amt()
         self._data = {
-            "invoice":{
-                "items": self.items, "taxes": self.taxes,
+            "invoice": {
+                "items": self.__encode_items(self.items), "taxes": self.taxes,
                 "total_amount": total_amount,
                 "description": self.description,
             },
@@ -99,4 +105,14 @@ class Invoice(Payment):
     def calculate_total_amt(self, items={}):
         """Returns the total amount/cost of items in the current invoice"""
         _items = items.items() or self.items.items()
-        return sum(float(x[1]['total_price']) for x in _items)
+        return sum(float(x[1].total_price) for x in _items)
+
+    def __encode_items(self, items):
+        """Encodes the InvoiceItems into a JSON serializable format
+
+        items = [('item_1',InvoiceItem(name='VIP Ticket', quantity=2,
+                             unit_price='35.0', total_price='70.0',
+                             description='VIP Tickets for party')),...]
+        """
+        xs = [item._asdict() for (_key, item) in items.items()]
+        return map(lambda x: dict(zip(x.keys(), x.values())), xs)

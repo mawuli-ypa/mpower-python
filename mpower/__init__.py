@@ -4,10 +4,9 @@ MPower Payments Python clinet library.
 Modules implemented: DirectPay, DirectCard, Invoice, and OPR
 """
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __author__ = "Mawuli Adzaku <mawuli@mawuli.me>"
 
-import os
 import sys
 import requests
 try:
@@ -24,7 +23,7 @@ API_VERSION = 'v1'
 
 SERVER = "app.mpowerpayments.com"
 
-#Sandbox Endpoint
+# Sandbox Endpoint
 SANDBOX_ENDPOINT = "https://%s/sandbox-api/%s/" % (SERVER, API_VERSION)
 
 # Live Endpoint
@@ -41,6 +40,7 @@ class MPowerError(Exception):
     """Base Exception class"""
     def __init__(self, value):
         self.value = value
+
     def __str__(self):
         return repr(self.value)
 
@@ -65,11 +65,13 @@ class Store(object):
         """
         return self.__dict__
 
+
 class Payment(object):
     """Base class for other MPower payments classes"""
+
     def __init__(self):
         """Base class for all the other payment libraries"""
-       # request headers
+        # request headers
         self._headers = {
             'User-Agent': MP_USER_AGENT,
             "Content-Type": "application/json"
@@ -83,7 +85,7 @@ class Payment(object):
     def _process(self, resource=None, data={}):
         """Processes the current transaction
 
-        Sends an HTTP request to the currently active endpoint of the MPower API
+        Sends an HTTP request to the MPower API server
         """
         # use object's data if no data is passed
         _data = data or self._data
@@ -100,8 +102,8 @@ class Payment(object):
                 return (True, self._response)
             else:
                 return (False, self._response['response_text'])
-
-        return (response.code, "Request Failed")
+        else:
+            return (500, "Request Failed")
 
     @property
     def headers(self):
@@ -113,7 +115,9 @@ class Payment(object):
         if type(header) is dict:
             self._headers.update(header)
         else:
-            raise ValueError("Dictionary expected, got '%s' instead" % type(header))
+            raise ValueError(
+                "Dictionary expected, got '%s' instead" % type(header)
+            )
 
     def get_rsc_endpoint(self, rsc):
         """Returns the HTTP API URL for current payment transaction"""
@@ -137,14 +141,16 @@ class Payment(object):
 
 
 # moved here so the modules that depend on the 'Payment' class will work
-from .invoice import Invoice
+from .invoice import Invoice, InvoiceItem
 from .direct_payments import DirectPay, DirectCard
 from .opr import OPR
 
-__all__ = [Store.__name__,
-           Payment.__name__,
-           Invoice.__name__,
-           DirectCard.__name__,
-           DirectPay.__name__,
-           OPR.__name__
+__all__ = [
+    Store.__name__,
+    Payment.__name__,
+    Invoice.__name__,
+    InvoiceItem.__name__,
+    DirectCard.__name__,
+    DirectPay.__name__,
+    OPR.__name__
 ]

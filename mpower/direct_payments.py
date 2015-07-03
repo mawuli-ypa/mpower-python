@@ -45,4 +45,4 @@ class DirectPay(Payment):
     def process(self, transaction=None):
         """Process the transaction"""
         return self._process('direct-pay/credit-account',
-                             transaction or  self.transaction)
+                             transaction or self.transaction)

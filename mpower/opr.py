@@ -1,5 +1,5 @@
 """MPower Payments Onsite Payments Request"""
-from . import Payment, Store
+from . import Payment
 
 
 class OPR(Payment):
@@ -13,7 +13,7 @@ class OPR(Payment):
     def _build_opr_data(self, data, store):
         """Returns a well formatted OPR data"""
         return {
-            "invoice_data" : {
+            "invoice_data": {
                 "invoice": {
                     "total_amount": data.get("total_amount"),
                     "description": data.get("description")
@@ -21,7 +21,7 @@ class OPR(Payment):
                 "store": store.info
             },
             "opr_data": {
-                "account_alias" : data.get("account_alias")
+                "account_alias": data.get("account_alias")
             }
         }
 

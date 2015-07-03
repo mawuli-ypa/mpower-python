@@ -21,6 +21,7 @@ Usage
 .. code-block:: python
 
     import mpower
+    from mpower import InvoiceItem, Store
 
     # runtime configs
     MP_ACCESS_TOKENS = {
@@ -34,18 +35,25 @@ Usage
     mpower.api_keys = MP_ACCESS_TOKENS
 
     # Invoice
-    store = mpower.Store(name='FooBar Shop')
+    store = Store(name='FooBar Shop')
     items = [
-        {
-            "name": "VIP Ticket",
-            "quantity": 2,
-            "unit_price": "35.0",
-            "total_price": "70.0",
-            "description": "VIP Tickets for the MPower Event"
+        InvoiceItem(
+            name="VIP Ticket",
+            quantity=2,
+            unit_price="35.0",
+            total_price="70.0",
+            description="VIP Tickets for the MPower Event"
+        },
+        InvoiceItem(
+            name="Shoe",
+            quantity=1,
+            unit_price="75.99",
+            total_price="80.99",
+            description="Black shoe for men"
         },
     ]
     invoice = mpower.Invoice(store)
-    invoice.add_items(items * 10)
+    invoice.add_items(items)
     # taxes are (key,value) pairs
     invoice.add_taxes([("NHIS TAX", 23.8), ("VAT", 5)])
     invoice.add_custom_data([
