@@ -9,10 +9,12 @@ __author__ = "Mawuli Adzaku <mawuli@mawuli.me>"
 
 import sys
 import requests
+
 try:
     import simplejson as json
 except ImportError:
     import json
+
 
 # runs in LIVE mode by defaults
 debug = False
@@ -82,7 +84,7 @@ class Payment(object):
         self._data = None
         self.store = Store(name=None)
 
-    def _process(self, resource=None, data={}):
+    def _process(self, resource=None, data=None):
         """Processes the current transaction
 
         Sends an HTTP request to the MPower API server

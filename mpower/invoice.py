@@ -1,9 +1,10 @@
 """MPower Payments Invoice"""
-from . import Payment
 from collections import namedtuple
+from . import Payment
 
-InvoiceItem = namedtuple('InvoiceItem', 'name quantity unit_price \
-                             total_price description')
+
+InvoiceItem = namedtuple(
+    'InvoiceItem', 'name quantity unit_price total_price description')
 
 
 class Invoice(Payment):
@@ -26,7 +27,7 @@ class Invoice(Payment):
         if store:
             self.store = store
 
-    def create(self, items=[], taxes=[], custom_data=[]):
+    def create(self, items=None, taxes=None, custom_data=None):
         """Adds the items to the invoice
 
         Format of 'items':
@@ -41,9 +42,9 @@ class Invoice(Payment):
         ,...
         ]
         """
-        self.add_items(items)
-        self.add_taxes(taxes)
-        self.add_custom_data(custom_data)
+        self.add_items(items or [])
+        self.add_taxes(taxes or [])
+        self.add_custom_data(custom_data or [])
         return self._process('checkout-invoice/create', self._prepare_data)
 
     def confirm(self, token=None):
@@ -67,12 +68,12 @@ class Invoice(Payment):
             tax_key = "tax_" + str(idx + _idx)
             self.taxes[tax_key] = {"name": tax[0], "amount": tax[1]}
 
-    def add_custom_data(self, data=[]):
+    def add_custom_data(self, data=None):
         """Adds the data to teh custom data sent to the server
 
         data format: [("phone_brand", Motorola V3"), ("model", "65456AH23")]
         """
-        self.custom_data.update(dict(data))
+        self.custom_data.update(dict(data or []))
 
     def add_item(self, item):
         """Updates the list of items in the current transaction"""
@@ -103,9 +104,9 @@ class Invoice(Payment):
         }
         return self._data
 
-    def calculate_total_amt(self, items={}):
+    def calculate_total_amt(self, items=None):
         """Returns the total amount/cost of items in the current invoice"""
-        _items = items.items() or self.items.items()
+        _items = (items or self.items).items()
         return sum(float(x[1].total_price) for x in _items)
 
     def __encode_items(self, items):
