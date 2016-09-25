@@ -85,6 +85,5 @@ setup(
         "Topic :: Utilities",
         "License :: OSI Approved :: MIT License",
     ],
-    install_requires=['requests >=2.0'],
-    setup_requires=['nose>=1.3.7']
+    install_requires=['requests >=2.0']
 )
