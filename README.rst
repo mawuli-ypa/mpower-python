@@ -43,14 +43,14 @@ Usage
             unit_price="35.0",
             total_price="70.0",
             description="VIP Tickets for the MPower Event"
-        },
+        ),
         InvoiceItem(
             name="Shoe",
             quantity=1,
             unit_price="75.99",
             total_price="80.99",
             description="Black shoe for men"
-        },
+        ),
     ]
     invoice = mpower.Invoice(store)
     invoice.add_items(items)
