@@ -37,7 +37,7 @@ class Invoice(Payment):
              unit_price= "35.0",
              total_price= "70.0",
              description= "VIP Tickets for the MPower Event"
-          }
+          )
         ,...
         ]
         """
@@ -115,5 +115,6 @@ class Invoice(Payment):
                              unit_price='35.0', total_price='70.0',
                              description='VIP Tickets for party')),...]
         """
-        xs = [item._asdict() for (_key, item) in items.items()]
-        return list(map(lambda x: dict(zip(x.keys(), x.values())), xs))
+        xs = {_key: dict(zip(item._fields, list(item)))
+              for (_key, item) in items.items()}
+        return xs
