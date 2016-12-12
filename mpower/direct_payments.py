@@ -16,8 +16,8 @@ class DirectCard(Payment):
           "amount" : "300"
         }'
     """
-    def __init__(self, card_info={}):
-        self.card_info = card_info
+    def __init__(self, card_info=None):
+        self.card_info = card_info or {}
         super(DirectCard, self).__init__()
 
     def process(self, card_info=None):

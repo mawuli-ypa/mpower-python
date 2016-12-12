@@ -65,6 +65,7 @@ def readme(filename='README.rst'):
     f.close()
     return text
 
+
 setup(
     name='mpower',
     version=__import__('mpower').__version__,
@@ -84,5 +85,5 @@ setup(
         "Topic :: Utilities",
         "License :: OSI Approved :: MIT License",
     ],
-    install_requires=['requests >=2.0'],
+    install_requires=['requests >=2.0']
 )

@@ -4,8 +4,8 @@ from . import Payment
 
 class OPR(Payment):
     """Onsite Payment Request"""
-    def __init__(self, data={}, store=None):
-        self._opr_data = self._build_opr_data(data, store)
+    def __init__(self, data=None, store=None):
+        self._opr_data = self._build_opr_data(data or {}, store)
         super(OPR, self).__init__()
         if store:
             self.store = store
@@ -25,12 +25,13 @@ class OPR(Payment):
             }
         }
 
-    def create(self, data={}, store=None):
+    def create(self, data=None, store=None):
         """Initiazes an OPR
 
         First step in the OPR process is to create the OPR request.
         Returns the OPR token
         """
+
         _store = store or self.store
         _data = self._build_opr_data(data, _store) if data else self._opr_data
         return self._process('opr/create', _data)

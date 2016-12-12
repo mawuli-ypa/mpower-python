@@ -10,10 +10,26 @@ Installation
 
 .. code-block:: bash
 
+    # Pip
     $ sudo pip install mpower
-    $ OR git clone https://github.com/mawuli/mpower-python
-    $ cd mpower-python; python setup.py install`
-    $ nosetests tests/  # run unit tests
+
+    # Manual
+    $ git clone https://github.com/mawuli/mpower-python
+    $ cd mpower-python
+    $ python setup.py install
+
+
+Test
+------------
+
+.. code-block:: bash
+
+    $ cd mpower-python
+    $ python setup.py test
+
+    # Using nose
+    $ nosetests tests/
+
 
 Usage
 -----
@@ -21,7 +37,6 @@ Usage
 .. code-block:: python
 
     import mpower
-    from mpower import InvoiceItem, Store
 
     # runtime configs
     MP_ACCESS_TOKENS = {
@@ -29,22 +44,25 @@ Usage
         'MP-Private-Key': "Your MPower private key",
         'MP-Token': "Your MPower token"
     }
+
     # defaults to False
     mpower.debug = True
+
     # set the access/api keys
     mpower.api_keys = MP_ACCESS_TOKENS
 
     # Invoice
-    store = Store(name='FooBar Shop')
+    store = mpower.Store(name='FooBar Shop')
+
     items = [
-        InvoiceItem(
+        mpower.InvoiceItem(
             name="VIP Ticket",
             quantity=2,
             unit_price="35.0",
             total_price="70.0",
             description="VIP Tickets for the MPower Event"
         },
-        InvoiceItem(
+        mpower.InvoiceItem(
             name="Shoe",
             quantity=1,
             unit_price="75.99",
@@ -52,6 +70,7 @@ Usage
             description="Black shoe for men"
         },
     ]
+    
     invoice = mpower.Invoice(store)
     invoice.add_items(items)
     # taxes are (key,value) pairs
